@@ -15,63 +15,13 @@ import ActivityPreview from "../../components/ActiviyPreview";
 import { activityApi } from "../../api";
 import Sorter from "../../components/Sorter";
 import Filter from "../../components//Filter";
+import { ExtraSelected } from "../../ActivityConditions";
 
 const dpi = PixelRatio.get();
 
 const Extra = ({ navigation }) => {
   const [sorter, setSorter] = useState("latestAsc");
-  const [filter, setFilter] = useState({
-    type: { btn_0: false, btn_1: false, btn_2: false, btn_3: false },
-    field: {
-      btn_0: false,
-      btn_1: false,
-      btn_2: false,
-      btn_3: false,
-      btn_4: false,
-      btn_5: false,
-      btn_6: false,
-      btn_7: false,
-      btn_8: false,
-      btn_9: false,
-      btn_10: false,
-      btn_11: false,
-      btn_12: false,
-      btn_13: false,
-      btn_14: false,
-    },
-    organizer: {
-      btn_0: false,
-      btn_1: false,
-      btn_2: false,
-      btn_3: false,
-      btn_4: false,
-      btn_5: false,
-      btn_6: false,
-      btn_7: false,
-      btn_8: false,
-    },
-    district: {
-      btn_0: false,
-      btn_1: false,
-      btn_2: false,
-      btn_3: false,
-      btn_4: false,
-      btn_5: false,
-      btn_6: false,
-      btn_7: false,
-      btn_8: false,
-      btn_9: false,
-      btn_10: false,
-      btn_11: false,
-      btn_12: false,
-      btn_13: false,
-      btn_14: false,
-      btn_15: false,
-      btn_16: false,
-      btn_17: false,
-      btn_18: false,
-    },
-  });
+  const [filter, setFilter] = useState(ExtraSelected);
   const [conditions, setConditions] = useState({
     type: "",
     field: "",
@@ -122,13 +72,14 @@ const Extra = ({ navigation }) => {
     }
   );
   const isFocused = useIsFocused();
+
   const updateData = async () => {
     try {
       await refetch();
     } catch (e) {
       console.log(e);
     } finally {
-      setLoadAgain(false);
+      await setLoadAgain(false);
     }
   };
 
@@ -139,20 +90,21 @@ const Extra = ({ navigation }) => {
   if (loadAgain) {
     updateData();
   }
+  // useEffect(() => {
+  //   navigation.addListener("tabPress", () => {
+  //     updateData();
+  //   });
+  // }, [navigation]);
 
-  useEffect(() => {
-    navigation.addListener("tabPress", updateData);
-  }, [navigation]);
+  // const bottomTabNavigation = navigation.getParent();
 
-  const bottomTabNavigation = navigation.getParent();
-
-  useEffect(() => {
-    bottomTabNavigation.addListener("tabPress", () => {
-      if (isFocused) {
-        setLoadAgain(true);
-      }
-    });
-  }, [bottomTabNavigation]);
+  // useEffect(() => {
+  //   bottomTabNavigation.addListener("tabPress", () => {
+  //     if (isFocused) {
+  //       setLoadAgain(true);
+  //     }
+  //   });
+  // }, [bottomTabNavigation]);
 
   const headerComponent = (
     <View
@@ -179,33 +131,29 @@ const Extra = ({ navigation }) => {
   );
 
   const activityKeyExtractor = ({ item }) => `${item.id}`;
-  const renderActivityPreview = ({ item }) =>
-    extraLoading ? (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    ) : (
-      <ActivityPreview
-        id={item.id}
-        name={item.name}
-        openedAt={item.openedAt}
-        closedAt={item.closedAt}
-        type={item.type}
-        marked={item.marked}
-        url={item.url}
-        updateLoad={updateLoad}
-      />
-    );
+  const renderActivityPreview = ({ item }) => (
+    <ActivityPreview
+      id={item.id}
+      name={item.name}
+      openedAt={item.openedAt}
+      closedAt={item.closedAt}
+      type={item.type}
+      field={item.field}
+      marked={item.marked}
+      url={item.url}
+      updateLoad={updateLoad}
+    />
+  );
 
-  const loadMore = () => {
+  const loadMore = async () => {
     if (hasNextPage) {
-      fetchNextPage();
+      await fetchNextPage();
     }
   };
 
   // TODO loading 예쁘게 만들어주기
   return extraLoading ? null : extraData.pages === null ||
-    typeof extraData.pages == "undefined" ? (
+    typeof extraData.pages === "undefined" ? (
     <View>
       <Text>공고를 불러올 수 없습니다!</Text>
     </View>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -21,11 +21,12 @@ import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import styled from "styled-components/native";
+import messaging from "@react-native-firebase/messaging";
 
 import Root from "./navigation/Root";
 import Tabs from "./navigation/Tabs";
 import RegisterStack from "./navigation/RegisterStack";
-import { activityApi, userApi } from "./api";
+import { activityApi, userApi, notificationApi } from "./api";
 import { getValue, setValue, flush } from "./helpers/Storage";
 
 LogBox.ignoreLogs(["Setting a timer"]);
@@ -44,10 +45,17 @@ const containerHeight =
 const queryClient = new QueryClient();
 
 export default function App() {
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      Alert.alert("알림 테스트", JSON.stringify(remoteMessage));
+      console.log(JSON.stringify(remoteMessage));
+    });
+    return unsubscribe;
+  }, []);
+
   const [ready, setReady] = useState(false);
   const [dpi, setDpi] = useState(0);
   const [keyValid, setKeyValid] = useState(false);
-  // const [homeMainData, setHomeMainData] = useState([]);
 
   const keyValidator = (keyValid) => {
     setKeyValid(keyValid);
@@ -55,15 +63,43 @@ export default function App() {
 
   // TODO 와이파이 없으면 어떻게 대응할지
 
+  useEffect(() => {
+    getApiKey();
+  }, []);
+
+  const getFcmToken = async () => {
+    const token = await messaging().getToken();
+    const storedToken = await getValue("fcmToken");
+    if (
+      storedToken === null ||
+      (storedToken !== null && token !== storedToken)
+    ) {
+      const response = await notificationApi.updateToken(token);
+      if (response.ok) {
+        await setValue("fcmToken", token);
+      } else {
+        // TODO Error Handling + Logging
+      }
+    }
+  };
+
   const getApiKey = async () => {
     const apiKey = await getValue("apiKey");
+
     if (apiKey !== null) {
       const response = await userApi.login(apiKey);
       const data = await response.json();
       if (response.ok) {
         setKeyValid(true);
         await setValue("nickname", data.result.nickname);
-        await setValue("feedbackUrl", data.result.feedbackUrl);
+        if (!data.result.feedbackUrl) {
+          await setValue("feedbackUrl", "");
+        } else {
+          await setValue(
+            "feedbackUrl",
+            JSON.stringify(data.result.feedbackUrl)
+          );
+        }
       } else {
         Alert.alert(data.message, "", [
           { text: "OK", onPress: () => BackHandler.exitApp() },
@@ -72,36 +108,27 @@ export default function App() {
     }
   };
 
-  const startLoading = async () => {
-    const fonts = Font.loadAsync(customFonts);
-    const dpis = setDpi(PixelRatio.get());
-    const validation = getApiKey();
-    // const data = setHomeMainData(await homeApi.main());
-    // await Promise.all([fonts, dpis, data]);
-    await Promise.all([fonts, dpis, validation]);
-  };
-
-  const onFinish = () => {
-    setReady(true);
-  };
-
-  if (!ready) {
-    return (
-      <AppLoading
-        startAsync={startLoading}
-        onFinish={onFinish}
-        onError={() => null}
-      />
-    );
-  }
-
   if (dpi === 0.75) {
     Alert.alert("미지원 기기", "지원되지 않는 기기입니다😢", [
       { text: "OK", onPress: () => BackHandler.exitApp() },
     ]);
   }
 
-  return (
+  if (keyValid) {
+    getFcmToken();
+  }
+
+  const startLoading = async () => {
+    const fonts = Font.loadAsync(customFonts);
+    const dpis = setDpi(PixelRatio.get());
+    await Promise.all([fonts, dpis]);
+  };
+
+  const onFinish = () => {
+    setReady(true);
+  };
+
+  return ready ? (
     <View style={{ flex: 1, paddingTop: containerHeight }}>
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
@@ -109,5 +136,11 @@ export default function App() {
         </NavigationContainer>
       </QueryClientProvider>
     </View>
+  ) : (
+    <AppLoading
+      startAsync={startLoading}
+      onFinish={onFinish}
+      onError={() => null}
+    />
   );
 }

@@ -34,17 +34,21 @@ const ActivityPreview = ({
   openedAt,
   closedAt,
   type,
+  field,
   marked,
   url,
   updateLoad,
 }) => {
+  const [bookmarked, setBookmarked] = useState(marked);
+
   const onPress = async () => {
-    updateLoad(true);
-    if (!marked) {
+    await updateLoad(true);
+    if (!bookmarked) {
       await activityApi.mark(id);
     } else {
       await activityApi.unmark(id);
     }
+    setBookmarked(!bookmarked);
   };
 
   const _handlePressButtonAsync = async () => {
@@ -99,9 +103,9 @@ const ActivityPreview = ({
                 color: dday >= 0 ? "#111111" : "#93929b",
                 marginVertical: 2,
               }}
+              numberOfLines={1}
             >
-              {/* TODO 제목 길 때 보여주는 거 제대로... */}
-              {name.length > 28 ? `${name.substring(0, 29)}...` : name}
+              {name.trim()}
             </Text>
             <TouchableOpacity
               style={{
@@ -113,7 +117,7 @@ const ActivityPreview = ({
               activeOpacity={0.6}
             >
               {/* <Bookmark marked={bookmarked} /> */}
-              {marked ? (
+              {bookmarked ? (
                 <Image
                   style={{
                     width: 24,
@@ -163,8 +167,13 @@ const ActivityPreview = ({
                   marginTop: 5,
                 }}
               >
-                {/* TODO 서버로부터 해당 값 받아와서 보여주기 + Divider도 필요할듯 */}
-                문학/음악/무용
+                {field.map((item, index, { length }) => {
+                  if (length - 1 === index) {
+                    return <Text key={index}>{item}</Text>;
+                  } else {
+                    return <Text key={index}>{item} ·</Text>;
+                  }
+                })}
               </Text>
             </View>
             <View

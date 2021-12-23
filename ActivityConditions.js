@@ -2,7 +2,7 @@ import React from "react";
 
 export const ActivityConditions = {
   extra: {
-    type: ["서포터즈", "기자단", "봉사", "강연/멘토링"],
+    type: ["서포터즈", "기자단", "봉사", "강연/캠프/멘토링"],
     field: [
       "금융/경제",
       "헬스/스포츠",
@@ -15,10 +15,13 @@ export const ActivityConditions = {
       "아이디어/발명",
       "디자인",
       "건축/설계/인테리어",
-      "미디어",
+      "컨텐츠/미디어",
       "문학/음악/무용",
       "창업/스타트업",
       "교육/행사",
+      "SNS/마케팅",
+      "자기계발/취미",
+      "교통",
     ],
     organizer: [
       "정부/공공기관",
@@ -62,6 +65,7 @@ export const ActivityConditions = {
       "영상/사진/카드뉴스",
       "웹/앱",
       "설계/모형",
+      "알고리즘/프로그램",
     ],
     field: [
       "금융/경제",
@@ -75,10 +79,13 @@ export const ActivityConditions = {
       "아이디어/발명",
       "디자인",
       "건축/설계/인테리어",
-      "미디어",
+      "컨텐츠/미디어",
       "문학/음악/무용",
       "창업/스타트업",
       "교육/행사",
+      "문화/관광/여행",
+      "교통",
+      "사회/복지",
     ],
     organizer: [
       "정부/공공기관",
@@ -122,6 +129,9 @@ export const ExtraSelected = {
     btn_12: false,
     btn_13: false,
     btn_14: false,
+    btn_15: false,
+    btn_16: false,
+    btn_17: false,
   },
   organizer: {
     btn_0: false,
@@ -166,6 +176,7 @@ export const ContestSelected = {
     btn_4: false,
     btn_5: false,
     btn_6: false,
+    btn_7: false,
   },
   field: {
     btn_0: false,
@@ -183,6 +194,9 @@ export const ContestSelected = {
     btn_12: false,
     btn_13: false,
     btn_14: false,
+    btn_15: false,
+    btn_16: false,
+    btn_17: false,
   },
   organizer: {
     btn_0: false,

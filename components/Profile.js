@@ -20,7 +20,8 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 const Profile = ({ keyValidator }) => {
   const [nickname, setNickname] = useState("");
 
-  const onChangeText = (text) => setNickname(text);
+  const onChangeText = (text) =>
+    text.length < 10 ? setNickname(text.replace(/\s/g, "").trim()) : null;
 
   const updateUserInfo = async () => {
     const nicknameObject = {
@@ -29,14 +30,14 @@ const Profile = ({ keyValidator }) => {
     const apiKey = await getValue("apiKey");
     if (apiKey === null) {
       const response = await userApi.register(nicknameObject);
+
       if (response.ok) {
         const { result } = await response.json();
-
         await setValue("apiKey", result.apiKey);
         await setValue("nickname", result.nickname);
         await setValue("feebackUrl", result.feedbackUrl);
 
-        await keyValidator(true);
+        keyValidator(true);
       } else {
         // TODO 에러 핸들링
         Alert.alert("사용자 정보를 생성할 수 없습니다", "", [
@@ -44,12 +45,14 @@ const Profile = ({ keyValidator }) => {
         ]);
       }
     } else {
-      await keyValidator(true);
+      keyValidator(true);
     }
   };
 
   const onPress = () => {
-    updateUserInfo();
+    if (nickname.length > 0) {
+      updateUserInfo();
+    }
   };
 
   return (
@@ -110,6 +113,7 @@ const Profile = ({ keyValidator }) => {
             placeholder="닉네임"
             placeholderTextColor="#d5d5d5"
             onChangeText={onChangeText}
+            value={nickname}
             style={{
               height: 56,
               marginRight: 20,
@@ -133,12 +137,12 @@ const Profile = ({ keyValidator }) => {
             marginLeft: 20,
             height: 56,
             borderRadius: 16,
-            backgroundColor: "#5a4cb3",
+            backgroundColor: nickname.length > 0 ? "#5a4cb3" : "#d5d5d5",
             justifyContent: "center",
             alignItems: "center",
           }}
           onPress={onPress}
-          activeOpacity={0.6}
+          activeOpacity={nickname.length > 0 ? 0.6 : 1}
         >
           <Text
             style={{

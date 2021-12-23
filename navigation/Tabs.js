@@ -94,7 +94,7 @@ const Tabs = () => {
           },
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="notification"
         component={Notification}
         options={{
@@ -122,7 +122,7 @@ const Tabs = () => {
             borderBottomWidth: 1,
           },
         }}
-      />
+      /> */}
       <Tab.Screen
         name="mypage"
         component={MyPage}

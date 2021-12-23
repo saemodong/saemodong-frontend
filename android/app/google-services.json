@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "348945775622",
+    "project_id": "saemodong-a3218",
+    "storage_bucket": "saemodong-a3218.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:348945775622:android:4e2f47c3b9048e1c00d787",
+        "android_client_info": {
+          "package_name": "com.saemodongfrontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "348945775622-ee8qpgahju5jkbbma2g9ftldovvr2pmo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5HPsQGw3yIlFZAMSxf20Cu1RGw98MX78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "348945775622-ee8qpgahju5jkbbma2g9ftldovvr2pmo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

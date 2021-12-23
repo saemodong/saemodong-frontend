@@ -2,11 +2,12 @@
   "expo": {
     "name": "saemodong-frontend",
     "slug": "saemodong-frontend",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "assetBundlePatterns": ["**/*"],
     "android": {
-      "package": "com.mkz.saemodongfrontend"
+      "versionCode": 2,
+      "package": "com.mkz.saemodongfrontend",
+      "permissions": []
     }
-  },
-  "name": "saemodong-frontend"
+  }
 }

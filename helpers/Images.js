@@ -31,6 +31,7 @@ export const IMAGES = {
     check: require("../assets/images/drawable-mdpi/check.png"),
     goback: require("../assets/images/drawable-mdpi/goback.png"),
     profile_default: require("../assets/images/drawable-mdpi/profile_default.png"),
+    notification_read: require("../assets/images/drawable-mdpi/notification_read.png"),
   },
   hdpi: {
     bottomtab_home: {
@@ -60,6 +61,7 @@ export const IMAGES = {
     check: require("../assets/images/drawable-hdpi/check.png"),
     goback: require("../assets/images/drawable-hdpi/goback.png"),
     profile_default: require("../assets/images/drawable-hdpi/profile_default.png"),
+    notification_read: require("../assets/images/drawable-hdpi/notification_read.png"),
   },
   xhdpi: {
     bottomtab_home: {
@@ -89,6 +91,7 @@ export const IMAGES = {
     check: require("../assets/images/drawable-xhdpi/check.png"),
     goback: require("../assets/images/drawable-xhdpi/goback.png"),
     profile_default: require("../assets/images/drawable-xhdpi/profile_default.png"),
+    notification_read: require("../assets/images/drawable-xhdpi/notification_read.png"),
   },
   xxhdpi: {
     bottomtab_home: {
@@ -119,6 +122,7 @@ export const IMAGES = {
     check: require("../assets/images/drawable-xxhdpi/check.png"),
     goback: require("../assets/images/drawable-xxhdpi/goback.png"),
     profile_default: require("../assets/images/drawable-xxhdpi/profile_default.png"),
+    notification_read: require("../assets/images/drawable-xxhdpi/notification_read.png"),
   },
   xxxhdpi: {
     bottomtab_home: {
@@ -148,5 +152,6 @@ export const IMAGES = {
     check: require("../assets/images/drawable-xxxhdpi/check.png"),
     goback: require("../assets/images/drawable-xxxhdpi/goback.png"),
     profile_default: require("../assets/images/drawable-xxxhdpi/profile_default.png"),
+    notification_read: require("../assets/images/drawable-xxxhdpi/notification_read.png"),
   },
 };

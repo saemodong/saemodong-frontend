@@ -26,7 +26,7 @@ const RegisterStack = ({ keyValidator }) => {
             fontFamily: "AppleSDGothicNeo-Bold",
           },
         }}
-        component={Profile}
+        component={ProfileComponent}
       />
     </Stack.Navigator>
   );

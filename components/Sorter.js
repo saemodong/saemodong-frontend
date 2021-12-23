@@ -59,6 +59,7 @@ const Sorter = ({ sorter, sortWith }) => {
         backdropColor="#000000"
         backdropOpacity={0.8}
         onBackButtonPress={closeModal}
+        onBackdropPress={closeModal}
         style={{ justifyContent: "flex-end", margin: 0 }}
       >
         <View

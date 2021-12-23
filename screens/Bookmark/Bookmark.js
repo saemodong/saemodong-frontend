@@ -47,6 +47,7 @@ const Bookmark = ({ navigation }) => {
         openedAt={item.openedAt}
         closedAt={item.closedAt}
         type={item.type}
+        field={item.field}
         marked={item.marked}
         url={item.url}
         updateLoad={updateLoad}

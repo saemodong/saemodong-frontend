@@ -6,8 +6,10 @@ import {
   TouchableOpacity,
   Dimensions,
   PixelRatio,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import * as WebBrowser from "expo-web-browser";
 
 import { getIcon } from "../helpers/Icons";
 import { getValue } from "../helpers/Storage";
@@ -17,10 +19,17 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const MyPage = () => {
   const [nickname, setNickname] = useState("");
+  const [feedbackUrl, setFeedbackUrl] = useState("");
   const navigation = useNavigation();
+
   const getNickname = async () => {
     const nickname = await getValue("nickname");
     setNickname(nickname);
+  };
+
+  const getFeedbackUrl = async () => {
+    const url = await getValue("feedbackUrl");
+    setFeedbackUrl(url);
   };
 
   const onPressInterest = () => {
@@ -29,8 +38,21 @@ const MyPage = () => {
     });
   };
 
+  const onPressFeedback = async () => {
+    if (feedbackUrl) {
+      await WebBrowser.openBrowserAsync(JSON.parse(feedbackUrl));
+    } else {
+      Alert.alert(
+        "✨오픈 예정✨",
+        "\n곧 오픈할 예정입니다😊 \n조금만 기다려주세요!",
+        [{ text: "OK" }]
+      );
+    }
+  };
+
   useEffect(() => {
     getNickname();
+    getFeedbackUrl();
   }, []);
 
   return (
@@ -144,7 +166,7 @@ const MyPage = () => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View
+        {/* <View
           style={{
             width: SCREEN_WIDTH,
             height: 48,
@@ -164,7 +186,7 @@ const MyPage = () => {
               알림 설정
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
         <View
           style={{
             borderTopWidth: 1,
@@ -193,7 +215,11 @@ const MyPage = () => {
             backgroundColor: "white",
           }}
         >
-          <TouchableOpacity style={{ paddingLeft: 20 }} activeOpacity={0.6}>
+          <TouchableOpacity
+            style={{ paddingLeft: 20 }}
+            activeOpacity={0.6}
+            onPress={onPressFeedback}
+          >
             <Text
               style={{
                 fontFamily: "AppleSDGothicNeo-SemiBold",

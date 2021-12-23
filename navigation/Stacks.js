@@ -3,8 +3,8 @@ import { Image, PixelRatio, TouchableOpacity } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 
-// import InterestTabs from "./InterestTabs";
-import Interest from "../screens/Interest";
+import InterestTabs from "./InterestTabs";
+
 import { getIcon } from "../helpers/Icons";
 
 const NativeStack = createNativeStackNavigator();
@@ -39,7 +39,7 @@ const Stacks = () => {
             </TouchableOpacity>
           ),
         }}
-        component={Interest}
+        component={InterestTabs}
       />
     </NativeStack.Navigator>
   );

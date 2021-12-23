@@ -12,7 +12,10 @@ const InterestSlide = ({ isExtra, initialState, modifier }) => {
   useEffect(async () => {
     if (isExtra) {
       const TValue = JSON.stringify(selected);
-      await setValue("recentExtraInterest", TValue);
+      await setValue("extraInterest", TValue);
+    } else {
+      const TValue = JSON.stringify(selected);
+      await setValue("contestInterest", TValue);
     }
   }, [selected]);
 
@@ -25,6 +28,7 @@ const InterestSlide = ({ isExtra, initialState, modifier }) => {
     let fieldCondition;
     let organizerCondition;
     let districtCondition;
+    let prizeCondition;
     for (const [title, item] of Object.entries(selected)) {
       let condition = "";
       for (const [key, value] of Object.entries(item)) {
@@ -55,7 +59,6 @@ const InterestSlide = ({ isExtra, initialState, modifier }) => {
         } else {
           typeCondition = condition;
         }
-        // contest api로 전달하기
       }
     }
     if (isExtra) {
@@ -67,20 +70,32 @@ const InterestSlide = ({ isExtra, initialState, modifier }) => {
       };
       const response = await userApi.setExtraInterest(extraInterest);
       if (response.ok) {
-        // setValue(fixed, recent) 굳이 필요가 없지...
-        const extra = await getValue("recentExtraInterest");
+        const extra = await getValue("extraInterest");
         const parsed = await JSON.parse(extra);
         modifier(parsed);
       } else {
-        // setValue(recent, fixed)
+        Alert.alert("네트워크 오류", "변경사항 저장에 실패했습니다.", [
+          { text: "ok" },
+        ]);
+      }
+    } else {
+      const contestInterest = {
+        type: typeCondition,
+        field: fieldCondition,
+        organizer: organizerCondition,
+        prize: prizeCondition,
+      };
+      const response = await userApi.setContestInterest(contestInterest);
+      if (response.ok) {
+        const extra = await getValue("contestInterest");
+        const parsed = await JSON.parse(extra);
+        modifier(parsed);
+      } else {
         Alert.alert("네트워크 오류", "변경사항 저장에 실패했습니다.", [
           { text: "ok" },
         ]);
       }
     }
-    // recentExraInterest 서버로 전달
-    // 200 받으면 setValue("fixedExtraInterest", getValue("recentExtraInterest"))
-    // 다른 status 받으면 Alert 띄우기
   };
 
   return (
@@ -154,39 +169,38 @@ const InterestSlide = ({ isExtra, initialState, modifier }) => {
                 filterWith={selectedWith}
               />
             </>
-          ) : null}
-          {/* ) : (
+          ) : (
             <>
               <FilterItem
                 title="활동유형"
                 activityType="contest"
                 category="type"
-                filter={extraSelected}
-                filterWith={contestSelectedWith}
+                filter={selected}
+                filterWith={selectedWith}
               />
               <FilterItem
                 title="활동분야"
                 activityType="contest"
                 category="field"
-                filter={contestSelected}
-                filterWith={contestSelectedWith}
+                filter={selected}
+                filterWith={selectedWith}
               />
               <FilterItem
                 title="주최사"
                 activityType="contest"
                 category="organizer"
-                filter={contestSelected}
-                filterWith={contestSelectedWith}
+                filter={selected}
+                filterWith={selectedWith}
               />
               <FilterItem
                 title="시상내용"
                 activityType="contest"
                 category="prize"
-                filter={contestSelected}
-                filterWith={contestSelectedWith}
+                filter={selected}
+                filterWith={selectedWith}
               />
             </>
-          )} */}
+          )}
         </View>
       </ScrollView>
       <TouchableOpacity

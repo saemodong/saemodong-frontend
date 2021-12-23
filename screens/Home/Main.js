@@ -31,6 +31,8 @@ const Main = ({ navigation }) => {
     setIsToday(isToday === "N" ? "Y" : "N");
   };
 
+  // useEffect(() => updateData(), []);
+
   const {
     isLoading: mainLoading,
     data: mainData,
@@ -43,6 +45,7 @@ const Main = ({ navigation }) => {
       return nextPage > currentPage.result.totalPage - 1 ? null : nextPage;
     },
   });
+
   const isFocused = useIsFocused();
 
   const updateData = async () => {
@@ -63,19 +66,21 @@ const Main = ({ navigation }) => {
     updateData();
   }
 
-  useEffect(() => {
-    navigation.addListener("tabPress", updateData);
-  }, [navigation]);
+  // useEffect(() => {
+  //   navigation.addListener("tabPress", () => {
+  //     updateData();
+  //   });
+  // }, [navigation]);
 
-  const bottomTabNavigation = navigation.getParent();
+  // const bottomTabNavigation = navigation.getParent();
 
-  useEffect(() => {
-    bottomTabNavigation.addListener("tabPress", () => {
-      if (isFocused) {
-        setLoadAgain(true);
-      }
-    });
-  }, [bottomTabNavigation]);
+  // useEffect(() => {
+  //   bottomTabNavigation.addListener("tabPress", () => {
+  //     if (isFocused) {
+  //       setLoadAgain(true);
+  //     }
+  //   });
+  // }, [bottomTabNavigation]);
 
   const headerComponent = (
     <View
@@ -125,27 +130,24 @@ const Main = ({ navigation }) => {
   );
 
   const activityKeyExtractor = ({ item }) => `${item.id}`;
-  const renderActivityPreview = ({ item }) => {
-    return mainLoading ? (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    ) : (
-      <ActivityPreview
-        id={item.id}
-        name={item.name}
-        openedAt={item.openedAt}
-        closedAt={item.closedAt}
-        type={item.type}
-        marked={item.marked}
-        url={item.url}
-        updateLoad={updateLoad}
-      />
-    );
-  };
-  const loadMore = () => {
+  const renderActivityPreview = ({ item }) => (
+    <ActivityPreview
+      key={item.id}
+      id={item.id}
+      name={item.name}
+      openedAt={item.openedAt}
+      closedAt={item.closedAt}
+      type={item.type}
+      field={item.field}
+      marked={item.marked}
+      url={item.url}
+      updateLoad={updateLoad}
+    />
+  );
+
+  const loadMore = async () => {
     if (hasNextPage) {
-      fetchNextPage();
+      await fetchNextPage();
     }
   };
 

@@ -120,6 +120,7 @@ const Filter = ({ isExtra, filter, filterWith, filtered, conditionsWith }) => {
         backdropColor="#000000"
         backdropOpacity={0.8}
         onBackButtonPress={closeModal}
+        onBackdropPress={closeModal}
         style={{ justifyContent: "flex-end", margin: 0 }}
       >
         <View
@@ -136,6 +137,7 @@ const Filter = ({ isExtra, filter, filterWith, filtered, conditionsWith }) => {
               marginHorizontal: 20,
               marginTop: 36,
             }}
+            showsVerticalScrollIndicator={false}
           >
             <View>
               {isExtra ? (

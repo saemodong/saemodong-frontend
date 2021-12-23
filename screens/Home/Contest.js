@@ -138,19 +138,19 @@ const Contest = ({ navigation }) => {
     updateData();
   }
 
-  useEffect(() => {
-    navigation.addListener("tabPress", updateData);
-  }, [navigation]);
+  // useEffect(() => {
+  //   navigation.addListener("tabPress", updateData);
+  // }, [navigation]);
 
-  const bottomTabNavigation = navigation.getParent();
+  // const bottomTabNavigation = navigation.getParent();
 
-  useEffect(() => {
-    bottomTabNavigation.addListener("tabPress", () => {
-      if (isFocused) {
-        setLoadAgain(true);
-      }
-    });
-  }, [bottomTabNavigation]);
+  // useEffect(() => {
+  //   bottomTabNavigation.addListener("tabPress", () => {
+  //     if (isFocused) {
+  //       setLoadAgain(true);
+  //     }
+  //   });
+  // }, [bottomTabNavigation]);
 
   const headerComponent = (
     <View
@@ -177,23 +177,20 @@ const Contest = ({ navigation }) => {
   );
 
   const activityKeyExtractor = ({ item }) => `${item.id}`;
-  const renderActivityPreview = ({ item }) =>
-    contestLoading ? (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    ) : (
-      <ActivityPreview
-        id={item.id}
-        name={item.name}
-        openedAt={item.openedAt}
-        closedAt={item.closedAt}
-        type={item.type}
-        marked={item.marked}
-        url={item.url}
-        updateLoad={updateLoad}
-      />
-    );
+  const renderActivityPreview = ({ item }) => (
+    <ActivityPreview
+      key={item.id}
+      id={item.id}
+      name={item.name}
+      openedAt={item.openedAt}
+      closedAt={item.closedAt}
+      type={item.type}
+      field={item.field}
+      marked={item.marked}
+      url={item.url}
+      updateLoad={updateLoad}
+    />
+  );
 
   const loadMore = () => {
     if (hasNextPage) {
@@ -203,7 +200,7 @@ const Contest = ({ navigation }) => {
 
   // TODO loading 예쁘게 만들어주기
   return contestLoading ? null : contestData.pages === null ||
-    typeof contestData.pages == "undefined" ? (
+    typeof contestData.pages === "undefined" ? (
     <View>
       <Text>공고를 불러올 수 없습니다!</Text>
     </View>

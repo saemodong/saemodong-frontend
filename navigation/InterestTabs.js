@@ -2,49 +2,48 @@ import React from "react";
 import { View, Text, Image, PixelRatio } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
-import { Extra_1, Extra_2, Contest_1, Contest_2 } from "../screens/Interest";
 import { getIcon } from "../helpers/Icons";
+import ExtraInterest from "../screens/Interest/ExtraInterest";
+import ContestInterest from "../screens/Interest/ContestInterest";
 
 const Tab = createMaterialTopTabNavigator();
 const dpi = PixelRatio.get();
 
-const TabBar = ({ state, descriptors, navigation, position }) => (
-  <View
-    style={{
-      flexDirection: "row",
-      justifyContent: "center",
-      marginBottom: 24,
-    }}
-  >
-    {state.routes.map((route, index) => {
-      const label = route.name;
-      const isFocused = state.index === index;
+const TabBar = ({ state, descriptors, navigation, position }) => {
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 24,
+      }}
+    >
+      {state.routes.map((route, index) => {
+        const label = route.name;
+        const isFocused = state.index === index;
 
-      return (
-        <View
-          style={{
-            backgroundColor: "#5a4cb3",
-            borderRadius: 16,
-            height: 8,
-            width: 8,
-            marginHorizontal: 8,
-          }}
-        ></View>
-      );
-    })}
-  </View>
-);
+        return (
+          <View
+            key={index}
+            style={{
+              backgroundColor: isFocused ? "#5a4cb3" : "#ccc8e7",
+              borderRadius: 16,
+              height: 8,
+              width: 8,
+              marginHorizontal: 4,
+            }}
+          ></View>
+        );
+      })}
+    </View>
+  );
+};
 
 const InterestTabs = () => {
   return (
-    <Tab.Navigator
-      tabBarPosition="bottom"
-      tabBar={(props) => <TabBar {...props} />}
-    >
-      <Tab.Screen name="Extra_1" component={Extra_1} />
-      <Tab.Screen name="Extra_2" component={Extra_2} />
-      <Tab.Screen name="Contest_1" component={Contest_1} />
-      <Tab.Screen name="Contest_2" component={Contest_2} />
+    <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
+      <Tab.Screen name="ExtraInterest" component={ExtraInterest} />
+      <Tab.Screen name="ContestInterest" component={ContestInterest} />
     </Tab.Navigator>
   );
 };
