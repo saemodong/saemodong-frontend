@@ -32,6 +32,8 @@ export const IMAGES = {
     goback: require("../assets/images/drawable-mdpi/goback.png"),
     profile_default: require("../assets/images/drawable-mdpi/profile_default.png"),
     notification_read: require("../assets/images/drawable-mdpi/notification_read.png"),
+    notification_unread_white: require("../assets/images/drawable-mdpi/notification_unread_white.png"),
+    arrow_right_white: require("../assets/images/drawable-mdpi/arrow_right_white.png"),
   },
   hdpi: {
     bottomtab_home: {
@@ -62,6 +64,8 @@ export const IMAGES = {
     goback: require("../assets/images/drawable-hdpi/goback.png"),
     profile_default: require("../assets/images/drawable-hdpi/profile_default.png"),
     notification_read: require("../assets/images/drawable-hdpi/notification_read.png"),
+    notification_unread_white: require("../assets/images/drawable-hdpi/notification_unread_white.png"),
+    arrow_right_white: require("../assets/images/drawable-hdpi/arrow_right_white.png"),
   },
   xhdpi: {
     bottomtab_home: {
@@ -92,6 +96,8 @@ export const IMAGES = {
     goback: require("../assets/images/drawable-xhdpi/goback.png"),
     profile_default: require("../assets/images/drawable-xhdpi/profile_default.png"),
     notification_read: require("../assets/images/drawable-xhdpi/notification_read.png"),
+    notification_unread_white: require("../assets/images/drawable-xhdpi/notification_unread_white.png"),
+    arrow_right_white: require("../assets/images/drawable-xhdpi/arrow_right_white.png"),
   },
   xxhdpi: {
     bottomtab_home: {
@@ -123,6 +129,8 @@ export const IMAGES = {
     goback: require("../assets/images/drawable-xxhdpi/goback.png"),
     profile_default: require("../assets/images/drawable-xxhdpi/profile_default.png"),
     notification_read: require("../assets/images/drawable-xxhdpi/notification_read.png"),
+    notification_unread_white: require("../assets/images/drawable-xxhdpi/notification_unread_white.png"),
+    arrow_right_white: require("../assets/images/drawable-xxhdpi/arrow_right_white.png"),
   },
   xxxhdpi: {
     bottomtab_home: {
@@ -153,5 +161,7 @@ export const IMAGES = {
     goback: require("../assets/images/drawable-xxxhdpi/goback.png"),
     profile_default: require("../assets/images/drawable-xxxhdpi/profile_default.png"),
     notification_read: require("../assets/images/drawable-xxxhdpi/notification_read.png"),
+    notification_unread_white: require("../assets/images/drawable-xxxhdpi/notification_unread_white.png"),
+    arrow_right_white: require("../assets/images/drawable-xxxhdpi/arrow_right_white.png"),
   },
 };

@@ -6,9 +6,8 @@ import styled from "styled-components/native";
 import Home from "../screens/Home/Home";
 import Bookmark from "../screens/Bookmark/Bookmark";
 import Notification from "../screens/Notification";
-import MyPage from "../screens/MyPage";
-import { getTabIcon } from "../helpers/TabIcons";
-import { getIcon } from "../helpers/Icons";
+import MyPage from "../screens/Mypage/Main";
+import { getIcon, getTabIcon } from "../helpers/Icons";
 
 const Tab = createBottomTabNavigator();
 const dpi = PixelRatio.get();
