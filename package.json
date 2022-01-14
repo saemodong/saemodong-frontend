@@ -25,7 +25,7 @@
     "expo-web-browser": "~10.0.3",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-native": "0.64.2",
+    "react-native": "0.64.3",
     "react-native-dotenv": "^3.2.0",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-modal": "^13.0.0",
@@ -41,7 +41,23 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "prettier": "2.5.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb",
+      "prettier"
+    ],
+    "rules": {
+      "react/prefer-stateless-function": 0,
+      "react/jsx-filename-extension": 0,
+      "react/jsx-one-expression-per-line": 0,
+      "react/prop-types": 0
+    },
+    "env": {
+      "browser": true
+    }
   },
   "private": true
 }
