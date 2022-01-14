@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { TabActions, useNavigation } from "@react-navigation/native";
 
 import FilterItem from "../components/FilterItem";
-import { ExtraSelected, ContestSelected } from "../ActivityConditions";
 import { getValue, setValue } from "../helpers/Storage";
 import { userApi } from "../api";
 
 const InterestSlide = ({ isExtra, initialState, modifier }) => {
   const [selected, setSelected] = useState(initialState);
+
+  const navigation = useNavigation();
 
   useEffect(async () => {
     if (isExtra) {
@@ -21,6 +23,12 @@ const InterestSlide = ({ isExtra, initialState, modifier }) => {
 
   const selectedWith = (selected) => {
     setSelected(selected);
+  };
+
+  const btnAction = (isExtra) => {
+    isExtra
+      ? navigation.dispatch(TabActions.jumpTo("ContestInterest"))
+      : navigation.popToTop();
   };
 
   const onPress = async () => {
@@ -96,6 +104,7 @@ const InterestSlide = ({ isExtra, initialState, modifier }) => {
         ]);
       }
     }
+    btnAction(isExtra);
   };
 
   return (
@@ -172,14 +181,14 @@ const InterestSlide = ({ isExtra, initialState, modifier }) => {
           ) : (
             <>
               <FilterItem
-                title="활동유형"
+                title="공모분야"
                 activityType="contest"
                 category="type"
                 filter={selected}
                 filterWith={selectedWith}
               />
               <FilterItem
-                title="활동분야"
+                title="공모주제"
                 activityType="contest"
                 category="field"
                 filter={selected}
@@ -223,7 +232,7 @@ const InterestSlide = ({ isExtra, initialState, modifier }) => {
             color: "white",
           }}
         >
-          완료
+          {isExtra ? "다음" : "완료"}
         </Text>
       </TouchableOpacity>
     </View>

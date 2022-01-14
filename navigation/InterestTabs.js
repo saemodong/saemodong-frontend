@@ -1,15 +1,13 @@
 import React from "react";
-import { View, Text, Image, PixelRatio } from "react-native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import {View, PixelRatio} from "react-native";
+import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 
-import { getIcon } from "../helpers/Icons";
-import ExtraInterest from "../screens/Interest/ExtraInterest";
-import ContestInterest from "../screens/Interest/ContestInterest";
+import ExtraInterest from "../screens/Mypage/UserInterest/ExtraInterest";
+import ContestInterest from "../screens/Mypage/UserInterest/ContestInterest";
 
 const Tab = createMaterialTopTabNavigator();
-const dpi = PixelRatio.get();
 
-const TabBar = ({ state, descriptors, navigation, position }) => {
+const TabBar = ({state, descriptors, navigation, position}) => {
   return (
     <View
       style={{
@@ -42,8 +40,8 @@ const TabBar = ({ state, descriptors, navigation, position }) => {
 const InterestTabs = () => {
   return (
     <Tab.Navigator tabBar={(props) => <TabBar {...props} />}>
-      <Tab.Screen name="ExtraInterest" component={ExtraInterest} />
-      <Tab.Screen name="ContestInterest" component={ContestInterest} />
+      <Tab.Screen name="ExtraInterest" component={ExtraInterest}/>
+      <Tab.Screen name="ContestInterest" component={ContestInterest}/>
     </Tab.Navigator>
   );
 };
