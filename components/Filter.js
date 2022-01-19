@@ -1,25 +1,28 @@
 import React, { useState } from "react";
 import Modal from "react-native-modal";
 import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  PixelRatio,
   Dimensions,
+  Image,
+  PixelRatio,
   ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 import { getIcon } from "../helpers/Icons";
-import { ActivityConditions } from "../ActivityConditions";
-import FilterItem from "./FilterItem";
+import ActivityCondition from "./ActivityCondition";
 
 const dpi = PixelRatio.get();
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
-const Filter = ({ isExtra, filter, filterWith, filtered, conditionsWith }) => {
+const Filter = ({
+  isExtra,
+  previousSelected,
+  setSelectedWith,
+  setConditionsWith,
+}) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
@@ -35,7 +38,7 @@ const Filter = ({ isExtra, filter, filterWith, filtered, conditionsWith }) => {
     let organizerCondition;
     let districtCondition;
     let prizeCondition;
-    for (const [title, item] of Object.entries(filter)) {
+    for (const [title, item] of Object.entries(previousSelected)) {
       let condition = "";
       for (const [key, value] of Object.entries(item)) {
         if (value === true) {
@@ -69,14 +72,14 @@ const Filter = ({ isExtra, filter, filterWith, filtered, conditionsWith }) => {
       }
     }
     if (isExtra) {
-      conditionsWith({
+      setConditionsWith({
         type: typeCondition,
         field: fieldCondition,
         organizer: organizerCondition,
         district: districtCondition,
       });
     } else {
-      conditionsWith({
+      setConditionsWith({
         type: typeCondition,
         field: fieldCondition,
         organizer: organizerCondition,
@@ -140,69 +143,11 @@ const Filter = ({ isExtra, filter, filterWith, filtered, conditionsWith }) => {
             showsVerticalScrollIndicator={false}
           >
             <View>
-              {isExtra ? (
-                <>
-                  <FilterItem
-                    title="활동유형"
-                    activityType="extra"
-                    category="type"
-                    filter={filter}
-                    filterWith={filterWith}
-                  />
-                  <FilterItem
-                    title="활동분야"
-                    activityType="extra"
-                    category="field"
-                    filter={filter}
-                    filterWith={filterWith}
-                  />
-                  <FilterItem
-                    title="주최사"
-                    activityType="extra"
-                    category="organizer"
-                    filter={filter}
-                    filterWith={filterWith}
-                  />
-                  <FilterItem
-                    title="지역"
-                    activityType="extra"
-                    category="district"
-                    filter={filter}
-                    filterWith={filterWith}
-                  />
-                </>
-              ) : (
-                <>
-                  <FilterItem
-                    title="활동유형"
-                    activityType="contest"
-                    category="type"
-                    filter={filter}
-                    filterWith={filterWith}
-                  />
-                  <FilterItem
-                    title="활동분야"
-                    activityType="contest"
-                    category="field"
-                    filter={filter}
-                    filterWith={filterWith}
-                  />
-                  <FilterItem
-                    title="주최사"
-                    activityType="contest"
-                    category="organizer"
-                    filter={filter}
-                    filterWith={filterWith}
-                  />
-                  <FilterItem
-                    title="시상내용"
-                    activityType="contest"
-                    category="prize"
-                    filter={filter}
-                    filterWith={filterWith}
-                  />
-                </>
-              )}
+              <ActivityCondition
+                isExtra={isExtra}
+                previousSelected={previousSelected}
+                setSelectedWith={setSelectedWith}
+              />
             </View>
             <View
               style={{

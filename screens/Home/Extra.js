@@ -1,16 +1,7 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  Image,
-  PixelRatio,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
-import { useQeury, useInfiniteQuery } from "react-query";
+import React, { useState } from "react";
+import { FlatList, PixelRatio, Text, View } from "react-native";
+import { useInfiniteQuery } from "react-query";
 import { useIsFocused } from "@react-navigation/native";
-
-import { getIcon } from "../../helpers/Icons";
 import ActivityPreview from "../../components/ActiviyPreview";
 import { activityApi } from "../../api";
 import Sorter from "../../components/Sorter";
@@ -28,7 +19,6 @@ const Extra = ({ navigation }) => {
     organizer: "",
     district: "",
   });
-  const [isFiltered, setIsFiltered] = useState(false);
   const [loadAgain, setLoadAgain] = useState(false);
 
   const sortWith = (sort) => {
@@ -39,11 +29,7 @@ const Extra = ({ navigation }) => {
     setFilter(filter);
   };
 
-  const filtered = (isFiltered) => {
-    setIsFiltered(isFiltered);
-  };
-
-  const conditionsWith = (conditions) => {
+  const setConditionsWith = (conditions) => {
     setConditions(conditions);
   };
 
@@ -121,10 +107,9 @@ const Extra = ({ navigation }) => {
     >
       <Filter
         isExtra={true}
-        filter={filter}
-        filterWith={filterWith}
-        filtered={filtered}
-        conditionsWith={conditionsWith}
+        previousSelected={filter}
+        setSelectedWith={filterWith}
+        setConditionsWith={setConditionsWith}
       />
       <Sorter sorter={sorter} sortWith={sortWith} />
     </View>

@@ -1,9 +1,15 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 
 import { ActivityConditions } from "../ActivityConditions";
 
-const FilterItem = ({ title, activityType, category, filter, filterWith }) => {
+const ActivityConditionItem = ({
+  title,
+  activityType,
+  category,
+  previousSelected,
+  setSelectedWith,
+}) => {
   return (
     <View style={{ marginBottom: 16 }}>
       <Text
@@ -29,19 +35,19 @@ const FilterItem = ({ title, activityType, category, filter, filterWith }) => {
               onPress={() => {
                 let T = new Object();
                 T[category] = {
-                  ...filter[category],
-                  [`btn_${index}`]: !filter[category][`btn_${index}`],
+                  ...previousSelected[category],
+                  [`btn_${index}`]: !previousSelected[category][`btn_${index}`],
                 };
-                filterWith({ ...filter, ...T });
+                setSelectedWith({ ...previousSelected, ...T });
               }}
             >
               <View
                 style={{
                   borderWidth: 1,
-                  borderColor: filter[category][`btn_${index}`]
+                  borderColor: previousSelected[category][`btn_${index}`]
                     ? "white"
                     : "rgba(0, 0, 0, 0.09)",
-                  backgroundColor: filter[category][`btn_${index}`]
+                  backgroundColor: previousSelected[category][`btn_${index}`]
                     ? "#5a4cb3"
                     : "white",
                   borderRadius: 18,
@@ -54,7 +60,9 @@ const FilterItem = ({ title, activityType, category, filter, filterWith }) => {
                 <Text
                   style={{
                     fontSize: 13,
-                    color: filter[category][`btn_${index}`] ? "white" : "black",
+                    color: previousSelected[category][`btn_${index}`]
+                      ? "white"
+                      : "black",
                   }}
                 >
                   {item}
@@ -68,4 +76,4 @@ const FilterItem = ({ title, activityType, category, filter, filterWith }) => {
   );
 };
 
-export default FilterItem;
+export default ActivityConditionItem;

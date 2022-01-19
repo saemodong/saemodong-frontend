@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { TabActions, useNavigation } from "@react-navigation/native";
-
-import FilterItem from "../components/FilterItem";
 import { getValue, setValue } from "../helpers/Storage";
 import { userApi } from "../api";
+import ActivityCondition from "./ActivityCondition";
 
 const InterestSlide = ({ isExtra, initialState, modifier }) => {
   const [selected, setSelected] = useState(initialState);
@@ -21,7 +20,7 @@ const InterestSlide = ({ isExtra, initialState, modifier }) => {
     }
   }, [selected]);
 
-  const selectedWith = (selected) => {
+  const setSelectedWith = (selected) => {
     setSelected(selected);
   };
 
@@ -147,69 +146,11 @@ const InterestSlide = ({ isExtra, initialState, modifier }) => {
             marginHorizontal: 20,
           }}
         >
-          {isExtra ? (
-            <>
-              <FilterItem
-                title="활동유형"
-                activityType="extra"
-                category="type"
-                filter={selected}
-                filterWith={selectedWith}
-              />
-              <FilterItem
-                title="활동분야"
-                activityType="extra"
-                category="field"
-                filter={selected}
-                filterWith={selectedWith}
-              />
-              <FilterItem
-                title="주최사"
-                activityType="extra"
-                category="organizer"
-                filter={selected}
-                filterWith={selectedWith}
-              />
-              <FilterItem
-                title="지역"
-                activityType="extra"
-                category="district"
-                filter={selected}
-                filterWith={selectedWith}
-              />
-            </>
-          ) : (
-            <>
-              <FilterItem
-                title="공모분야"
-                activityType="contest"
-                category="type"
-                filter={selected}
-                filterWith={selectedWith}
-              />
-              <FilterItem
-                title="공모주제"
-                activityType="contest"
-                category="field"
-                filter={selected}
-                filterWith={selectedWith}
-              />
-              <FilterItem
-                title="주최사"
-                activityType="contest"
-                category="organizer"
-                filter={selected}
-                filterWith={selectedWith}
-              />
-              <FilterItem
-                title="시상내용"
-                activityType="contest"
-                category="prize"
-                filter={selected}
-                filterWith={selectedWith}
-              />
-            </>
-          )}
+          <ActivityCondition
+            isExtra={isExtra}
+            previousSelected={selected}
+            setSelectedWith={setSelectedWith}
+          />
         </View>
       </ScrollView>
       <TouchableOpacity

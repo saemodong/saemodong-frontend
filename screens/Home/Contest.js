@@ -1,81 +1,25 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  Image,
-  PixelRatio,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
-import { useQeury, useInfiniteQuery } from "react-query";
+import React, { useState } from "react";
+import { FlatList, PixelRatio, Text, View } from "react-native";
+import { useInfiniteQuery } from "react-query";
 import { useIsFocused } from "@react-navigation/native";
 
-import { getIcon } from "../../helpers/Icons";
 import ActivityPreview from "../../components/ActiviyPreview";
 import { activityApi } from "../../api";
 import Sorter from "../../components/Sorter";
 import Filter from "../../components//Filter";
+import { ContestSelected } from "../../ActivityConditions";
 
 const dpi = PixelRatio.get();
 
 const Contest = ({ navigation }) => {
   const [sorter, setSorter] = useState("latestAsc");
-  const [filter, setFilter] = useState({
-    type: {
-      btn_0: false,
-      btn_1: false,
-      btn_2: false,
-      btn_3: false,
-      btn_4: false,
-      btn_5: false,
-      btn_6: false,
-    },
-    field: {
-      btn_0: false,
-      btn_1: false,
-      btn_2: false,
-      btn_3: false,
-      btn_4: false,
-      btn_5: false,
-      btn_6: false,
-      btn_7: false,
-      btn_8: false,
-      btn_9: false,
-      btn_10: false,
-      btn_11: false,
-      btn_12: false,
-      btn_13: false,
-      btn_14: false,
-    },
-    organizer: {
-      btn_0: false,
-      btn_1: false,
-      btn_2: false,
-      btn_3: false,
-      btn_4: false,
-      btn_5: false,
-      btn_6: false,
-      btn_7: false,
-      btn_8: false,
-    },
-    prize: {
-      btn_0: false,
-      btn_1: false,
-      btn_2: false,
-      btn_3: false,
-      btn_4: false,
-      btn_5: false,
-      btn_6: false,
-      btn_7: false,
-    },
-  });
+  const [filter, setFilter] = useState(ContestSelected);
   const [conditions, setConditions] = useState({
     type: "",
     field: "",
     organizer: "",
     prize: "",
   });
-  const [isFiltered, setIsFiltered] = useState(false);
   const [loadAgain, setLoadAgain] = useState(false);
 
   const sortWith = (sort) => {
@@ -86,11 +30,7 @@ const Contest = ({ navigation }) => {
     setFilter(filter);
   };
 
-  const filtered = (isFiltered) => {
-    setIsFiltered(isFiltered);
-  };
-
-  const conditionsWith = (conditions) => {
+  const setConditionsWith = (conditions) => {
     setConditions(conditions);
   };
 
@@ -167,10 +107,9 @@ const Contest = ({ navigation }) => {
     >
       <Filter
         isExtra={false}
-        filter={filter}
-        filterWith={filterWith}
-        filtered={filtered}
-        conditionsWith={conditionsWith}
+        previousSelected={filter}
+        setSelectedWith={filterWith}
+        setConditionsWith={setConditionsWith}
       />
       <Sorter sorter={sorter} sortWith={sortWith} />
     </View>
