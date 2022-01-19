@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import {
   View,
   Text,
@@ -8,28 +8,27 @@ import {
   PixelRatio,
   Alert,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import {useNavigation} from "@react-navigation/native";
 import * as WebBrowser from "expo-web-browser";
 
-import { getIcon } from "../helpers/Icons";
-import { getValue } from "../helpers/Storage";
+import {getIcon} from "../../helpers/Icons";
+import {getValue} from "../../helpers/Storage";
+import {FEEDBACK_URL} from "@env";
 
 const dpi = PixelRatio.get();
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-const MyPage = () => {
+const Main = () => {
   const [nickname, setNickname] = useState("");
-  const [feedbackUrl, setFeedbackUrl] = useState("");
   const navigation = useNavigation();
+
+  useEffect(() => {
+    getNickname();
+  }, []);
 
   const getNickname = async () => {
     const nickname = await getValue("nickname");
     setNickname(nickname);
-  };
-
-  const getFeedbackUrl = async () => {
-    const url = await getValue("feedbackUrl");
-    setFeedbackUrl(url);
   };
 
   const onPressInterest = () => {
@@ -39,21 +38,8 @@ const MyPage = () => {
   };
 
   const onPressFeedback = async () => {
-    if (feedbackUrl) {
-      await WebBrowser.openBrowserAsync(JSON.parse(feedbackUrl));
-    } else {
-      Alert.alert(
-        "✨오픈 예정✨",
-        "\n곧 오픈할 예정입니다😊 \n조금만 기다려주세요!",
-        [{ text: "OK" }]
-      );
-    }
+    await WebBrowser.openBrowserAsync(FEEDBACK_URL);
   };
-
-  useEffect(() => {
-    getNickname();
-    getFeedbackUrl();
-  }, []);
 
   return (
     <View
@@ -87,7 +73,7 @@ const MyPage = () => {
             }}
           >
             <Image
-              style={{ flex: 1, width: undefined, height: undefined }}
+              style={{flex: 1, width: undefined, height: undefined}}
               source={getIcon(dpi, "profile_default")}
             />
           </View>
@@ -100,7 +86,7 @@ const MyPage = () => {
             }}
           >
             <Text
-              style={{ fontFamily: "AppleSDGothicNeo-SemiBold", fontSize: 17 }}
+              style={{fontFamily: "AppleSDGothicNeo-SemiBold", fontSize: 17}}
             >
               {nickname}
             </Text>
@@ -130,7 +116,7 @@ const MyPage = () => {
         </View> */}
       </View>
       <View>
-        <View style={{ paddingBottom: 4, paddingLeft: 20 }}>
+        <View style={{paddingBottom: 4, paddingLeft: 20}}>
           <Text
             style={{
               fontFamily: "AppleSDGothicNeo-SemiBold",
@@ -152,7 +138,7 @@ const MyPage = () => {
           }}
         >
           <TouchableOpacity
-            style={{ paddingLeft: 20 }}
+            style={{paddingLeft: 20}}
             activeOpacity={0.6}
             onPress={onPressInterest}
           >
@@ -194,7 +180,7 @@ const MyPage = () => {
             height: 20,
           }}
         ></View>
-        <View style={{ paddingBottom: 4, paddingLeft: 20 }}>
+        <View style={{paddingBottom: 4, paddingLeft: 20}}>
           <Text
             style={{
               fontFamily: "AppleSDGothicNeo-SemiBold",
@@ -216,7 +202,7 @@ const MyPage = () => {
           }}
         >
           <TouchableOpacity
-            style={{ paddingLeft: 20 }}
+            style={{paddingLeft: 20}}
             activeOpacity={0.6}
             onPress={onPressFeedback}
           >
@@ -243,4 +229,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default Main;

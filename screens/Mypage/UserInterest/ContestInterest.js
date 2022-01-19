@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert } from "react-native";
 
-import InterestSlide from "../../components/InterestSlide";
-import { userApi } from "../../api";
-import { ExtraSelected, ContestSelected } from "../../ActivityConditions";
-import { getValue, setValue } from "../../helpers/Storage";
+import InterestSlide from "../../../components/InterestSlide";
+import { userApi } from "../../../api";
+import { ContestSelected } from "../../../ActivityConditions";
+import { setValue } from "../../../helpers/Storage";
 
 const ContestInterest = () => {
   const [userContestInterest, setUserContestInterest] =
@@ -90,6 +90,7 @@ const ContestInterest = () => {
       isExtra={false}
       initialState={userContestInterest}
       modifier={userContestInterestWith}
+      title="어떤 공모전을 "
     />
   ) : null;
 };
