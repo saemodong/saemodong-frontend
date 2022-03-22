@@ -18,11 +18,13 @@
 
 ## ⚙ 기술 스택
 
+- Javascript
 - React
 - React Native
-- Expo
+- React Navigation
 - React Query
 - Styled Components
+- Expo
 
 <br>
 
@@ -45,8 +47,7 @@
 
 ## 🛠 배포
 
-- 구글 플레이스토어에 비공개 테스트, 공개 테스트로 앱을 출시함.
-- 현재는 AWS 비용 문제로 인해 비공개로 전환하였음. (dev 환경, prod 환경의 인스턴스, rds 모두 돌리니 월 비용이 $15까지 올라갔던 경험을 한 뒤로...)
+- 구글 플레이스토어에 비공개 테스트로 앱 등록 및 내부 테스트 진행함. 
 
 <br>
 
